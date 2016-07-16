@@ -1,0 +1,67 @@
+﻿@model EFTest1.Models.RequestDetailsVM
+@{
+    ViewBag.Title = "Request Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts
+{
+<script type="text/javascript">
+    $(function () {
+        $('.datepicker').datepicker({
+            format: 'yyyy/mm/dd'
+        });
+    });
+</script>
+}
+
+<h2>Request Details</h2>
+
+@using (Html.BeginForm("RequestDetails", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(m => m.RequestID)
+    @Html.HiddenFor(m => m.PersonelDetails.PersonelID)
+    <div class="form-group">
+        @Html.LabelFor(m => m.PersonelDetails.Name, new { @class= "col-sm-2 control-label" })
+        <div class="col-sm-4">
+            @Html.TextBoxFor(m => m.PersonelDetails.Name, new { @class = "form-control" })
+        </div>
+        <div class="col-sm-4">
+            @Html.ValidationMessageFor(m => m.PersonelDetails.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PersonelDetails.Surname, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-4">
+            @Html.TextBoxFor(m => m.PersonelDetails.Surname, new { @class = "form-control" })
+        </div>
+        <div class="col-sm-4">
+            @Html.ValidationMessageFor(m => m.PersonelDetails.Surname, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PersonelDetails.SelectedTitleID, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-4">
+            @Html.DropDownListFor(m => m.PersonelDetails.SelectedTitleID, Model.PersonelDetails.TitleList, "<Select a Title>", new { @class = "form-control" })
+        </div>
+        <div class="col-sm-4">
+            @Html.ValidationMessageFor(m => m.PersonelDetails.SelectedTitleID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PersonelDetails.StartDate, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-4">
+            @Html.TextBoxFor(m => m.PersonelDetails.StartDate, "{0:yyyy/MM/dd}", new { @class = "form-control datepicker", data_provide = "datepicker" })
+        </div>
+        <div class="col-sm-4">
+            @Html.ValidationMessageFor(m => m.PersonelDetails.StartDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Submit</button>
+        </div>
+    </div>
+}
